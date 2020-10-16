@@ -1,4 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+
+from myapp.models import setdir
 
 from myapp.forms import UploadForm
 
@@ -24,6 +26,7 @@ def image_list(request):
 
 def upload_image(request):
     if request.method == 'POST':
+        setdir("personal/test")
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
