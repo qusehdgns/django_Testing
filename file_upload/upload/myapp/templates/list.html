@@ -2,4 +2,9 @@
 
 {% block content %}
     <h2>The image has been uploaded!!</h2>
+    {% if file %}
+    {% for temp in file %}
+    <a href="/down/?filename={{temp}}" download>{{temp}}</a>
+    {% endfor %}
+    {% endif %}
 {% endblock %}

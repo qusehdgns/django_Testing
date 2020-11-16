@@ -1,0 +1,31 @@
+exports.handler
+- 함수 실행 시 람다에 의해 호출되어 내보내는 메서드
+- 반드시 사용은 아니지만 기본적으로는 추천
+
+context.succeed
+- 콘텍스트 객체의 성공 메서드
+- succeed의 인수 호출자에게 다시 반환
+
+일단 우리가 node js 같은 걸 람다에서 index js로 생성해서 
+그 코드를 통해 (람다함수를 만들고) 그 함수를 (REST API 형태로 지정한)
+api gateway로 (연동하고) (최종적으로 API를 AWS 서버에 올려서 URL을 받고)
+우리가 데이터를 (람다 함수에) 전송하기 때문에 post 방식으로 설정해서 
+json 문법의 데이터를 설정해서 보내면 그걸 (람다 함수에서 받고 처리한 다음 context.succeed() 함수를 통해)
+우리에게 반환해준다?
+
+exports.handler = async (event) => {
+    // TODO implement
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify('Hello from Lambda!'),
+    };
+    return response;
+};
+
+exports.handler = (event, context, callback) => {
+    callback(null,'Hello from Lambda');
+};
+
+exports.handler = function(event, context) {
+    context.succeed("Hello World");
+};

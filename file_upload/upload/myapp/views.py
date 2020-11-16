@@ -4,6 +4,10 @@ from myapp.models import setdir
 
 from myapp.forms import UploadForm
 
+from myapp.models import ImageUpload
+
+from django.http import FileResponse
+
 import os
 
 def index(request):
@@ -21,7 +25,19 @@ def index(request):
 
 
 def image_list(request):
-    return render(request, 'list.html', {})
+    file = ImageUpload.objects.all()
+
+    print(file)
+
+    files = []
+
+    for temp in file:
+        print(temp)
+        files.append(temp)
+
+    print(files)
+
+    return render(request, 'list.html', {'file' : files})
 
 
 def upload_image(request):
@@ -36,3 +52,11 @@ def upload_image(request):
     return render(request, 'upload.html', {
         'form':form
     })
+
+def down(request):
+    title = request.GET['filename'];
+
+    file = ImageUpload.objects.get(title=title)
+    filename = file.pic.path
+    response = FileResponse(open(filename, 'rb'))
+    return response
